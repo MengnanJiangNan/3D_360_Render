@@ -222,24 +222,31 @@ def _render(mesh_path, num_views=24, use_shader_ccm=True):
             # Execute rendering command for RGB images
             rgb_args = common_args.copy()
             rgb_args.extend(['--output_folder', rgb_dir])
-            subprocess.run(rgb_args, check=True, text=True)
+            print(f"  - Rendering RGB images...")
+            subprocess.run(rgb_args, check=True, text=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            print(f"    RGB rendering complete")
             
             # Execute rendering command for normal maps
             normal_args = common_args.copy()
             normal_args.extend(['--output_folder', normal_dir, '--save_normal'])
-            subprocess.run(normal_args, check=True, text=True)
+            print(f"  - Rendering normal maps...")
+            subprocess.run(normal_args, check=True, text=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            print(f"    Normal maps rendering complete")
             
             # Execute rendering command for depth maps
             depth_args = common_args.copy()
             depth_args.extend(['--output_folder', depth_dir, '--save_depth'])
-            subprocess.run(depth_args, check=True, text=True)
+            print(f"  - Rendering depth maps...")
+            subprocess.run(depth_args, check=True, text=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            print(f"    Depth maps rendering complete")
             
             # Execute rendering command for CCM using shader-based method
             if use_shader_ccm:
                 ccm_args = common_args.copy()
                 ccm_args.extend(['--output_folder', ccm_dir, '--save_ccm'])
-                print("Generating CCM directly using shader-based approach...")
-                subprocess.run(ccm_args, check=True, text=True)
+                print(f"  - Generating CCM directly using shader-based approach...")
+                subprocess.run(ccm_args, check=True, text=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                print(f"    CCM generation complete")
             
             print(f"Batch {batch_idx + 1} completed successfully.")
         except subprocess.CalledProcessError as e:
